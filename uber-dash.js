@@ -1,31 +1,19 @@
-var pcap         = require('pcap');
-var tcp_tracker  = new pcap.TCPTracker();
-var pcap_session = pcap.createSession('en0');
+#!/usr/bin/env node
 
-var DASHBUTTON_MAC_ADDR = 'a0:02:dc:b1:3d:b2';
-var last_call = null;
+var commander = require('commander');
+var network   = require('./network');
+var uber      = require('./uber');
 
-function call_uber() {
-  console.log('CALLING UBER!!!');
-}
+var DEFAULT_DASHBUTTON_MAC_ADDRESS = 'a0:02:dc:b1:3d:b2';
 
-function d2h(d) {
-  var h = d.toString(16);
-  if (h.length < 2) {
-    h = '0' + h;
-  }
-  return h;
-}
+commander
+  .version('1.0.0')
+  .option('-m, --mac', 'Dashbutton MAC address')
+  .option('-t, --type', 'Type of uber')
+  .option('-p, --pickup', 'Pickup location')
+  .option('-d`, --drop', 'Dropoff location')
+  .parse(process.argv);
 
-function dadd2hadd(dadd) {
-  return dadd.map(d2h).join(':');
-}
+var dashbutton = commander.mac || DEFAULT_DASHBUTTON_MAC_ADDRESS;
 
-pcap_session.on('packet', function (raw_packet) {
-  var packet = pcap.decode.packet(raw_packet);
-  var dadd = packet.payload.shost.addr;
-
-  if (dadd2hadd(dadd) == DASHBUTTON_MAC_ADDR) {
-    call_uber();
-  }
-});
+network.listenForDashPress(dashbutton, uber.pool);

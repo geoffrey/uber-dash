@@ -34,7 +34,15 @@ app.get('/callback', function(req, res, next) {
   });
 });
 
-function callUber() {
+app.get('/products', function(req, res, next) {
+  getProducts(res);
+});
+
+app.get('/call', function(req, res, next) {
+  callUber(res);
+});
+
+function callUber(res) {
   if (!TOKEN) {
     return console.log('Please login first! Visit http://localhost:3000/login');
   }
@@ -58,7 +66,41 @@ function callUber() {
     json: data,
     headers: headers
   }, function(err, response, body) {
-    console.log('RESPONSE', body);
+    if (!!err) {
+      console.log('ERROR while ordering your ride', err)
+    }
+    console.log('Successfully requested your ride', body);
+    if (res) {
+      res.json(body);
+    }
+  });
+}
+
+function getProducts(res) {
+  if (!TOKEN) {
+    return console.log('Please login first! Visit http://localhost:3000/login');
+  }
+
+  var data =  {
+    'latitude': config.start_latitude,
+    'longitude': config.start_longitude
+  };
+
+  var headers = {
+    'Authorization': 'Bearer ' + TOKEN
+  };
+
+  request.get({
+    url: 'https://api.uber.com/v1/products',
+    qs: data,
+    headers: headers
+  }, function(err, response, body) {
+    if (!!err) {
+      console.log('ERROR while getting the products list', err)
+    }
+    if (res) {
+      res.json(JSON.parse(body));
+    }
   });
 }
 

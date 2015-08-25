@@ -1,7 +1,7 @@
 var request = require('request');
 var config  = require('./config');
 var app     = require('express')();
-var token   = null;
+var TOKEN   = null;
 
 app.get('/login', function(req,res,next){
   var url = 'https://login.uber.com/oauth/authorize';
@@ -24,14 +24,18 @@ app.get('/callback', function(req, res, next) {
     url: 'https://login.uber.com/oauth/token',
     form: data,
   }, function(err, response, body) {
+    if (!!err) {
+      return console.log('ERROR: Cannot login with Uber, try again!');
+    }
+    console.log('Successfully logged in with Uber, you can now press your button anytime!')
     body = JSON.parse(body);
-    token = body.access_token;
+    TOKEN = body.access_token;
     res.json(body);
   });
 });
 
 function callUber() {
-  if (!token) {
+  if (!TOKEN) {
     return console.log('Please login first! Visit http://localhost:3000/login');
   }
 
@@ -44,7 +48,7 @@ function callUber() {
   };
 
   var headers = {
-    'Authorization': 'Bearer ' + token
+    'Authorization': 'Bearer ' + TOKEN
   };
 
   console.log('REQUESTING UBER', data);

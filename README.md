@@ -1,7 +1,7 @@
 
 uber-dash
 ===
-Simple application to order an uber product using Amazon's dash-button.
+Simple application get a Uber ride using Amazon's dash-button.
 
 
 How does it work?

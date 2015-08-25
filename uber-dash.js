@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-var network    = require('./src/network');
-var uber       = require('./src/uber');
-var config     = require('./src/config');
+
+var config = require('./src/config');
 
 if (!config.dashbutton) {
   console.log('Add your dash button MAC address to ./src/config.js');
@@ -12,5 +11,8 @@ if (!config.uber.clientId || !config.uber.clientSecret || !config.uber.serverTok
   console.log('Create an Uber application and add the credentials to ./src/config.js');
   process.exit();
 }
+
+var network    = require('./src/network');
+var uber       = require('./src/uber');
 
 network.listenForDashPress(config.dashbutton, uber.call);

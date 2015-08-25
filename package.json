@@ -1,11 +1,12 @@
 {
   "name": "uber-dash",
   "version": "1.0.0",
-  "description": "Call uber with a push of a button",
+  "description": "Call Uber with a dash button",
   "main": "uber-dash.js",
   "dependencies": {
-    "commander": "^2.8.1",
-    "pcap": "^2.0.1"
+    "express": "^4.13.3",
+    "pcap": "^2.0.1",
+    "request": "^2.61.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -22,7 +23,7 @@
     "amazon"
   ],
   "author": "Geoffrey Tisserand",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/geoffrey/uber-dash/issues"
   },

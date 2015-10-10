@@ -1,5 +1,5 @@
 var request = require('request');
-var config  = require('./config');
+var config  = require('../config');
 var app     = require('express')();
 var TOKEN   = null;
 

@@ -15,7 +15,7 @@ I decided to use `Uber API` in order to get my daily Uber ride.
 Installation and setup
 ===
  - Create an app on [Uber](https://developer.uber.com/dashboard) in order to consume their API.
- - Modify `./src/config.js` with your dash button MAC address, your Uber application credentials and the start/end location of your drive 
+ - Modify `./config.js` with your dash button MAC address, your Uber application credentials and the start/end location of your drive
  - `$ npm install`
  - `$ sudo ./uber-dash.js` #root needed to monitor the network AFAIK
  - Visit `http://localhost:3000/login` to allow the app to request Uber rides for you then close the tab
